@@ -78,11 +78,13 @@ public class AiOutfitService {
             HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
             ResponseEntity<Map> response = restTemplate.postForEntity(openAiApiUrl, entity, Map.class);
 
-            if (response.getBody() != null) {
+            if (response.getBody() != null && response.getBody().containsKey("choices")) {
                 List<Map<String, Object>> choices = (List<Map<String, Object>>) response.getBody().get("choices");
-                if (choices != null && !choices.isEmpty()) {
+                if (choices != null && !choices.isEmpty() && choices.get(0).containsKey("message")) {
                     Map<String, Object> message = (Map<String, Object>) choices.get(0).get("message");
-                    return (String) message.get("content");
+                    if (message.containsKey("content")) {
+                        return (String) message.get("content");
+                    }
                 }
             }
         } catch (Exception e) {
@@ -121,7 +123,7 @@ public class AiOutfitService {
 
         for (String cat : targetCategories) {
             wardrobe.stream()
-                .filter(item -> item.category().name().equals(cat))
+                .filter(item -> item.getCategory().equals(cat))
                 .findFirst()
                 .ifPresent(selected::add);
         }
@@ -132,7 +134,7 @@ public class AiOutfitService {
     private String buildWardrobeDescription(List<WardrobeItemDto> wardrobe) {
         StringBuilder sb = new StringBuilder();
         for (WardrobeItemDto item : wardrobe) {
-            sb.append(String.format("%s (%s, %s), ", item.name(), item.category(), item.color()));
+            sb.append(String.format("%s (%s, %s), ", item.getName(), item.getCategory(), item.getColor()));
         }
         return sb.toString();
     }

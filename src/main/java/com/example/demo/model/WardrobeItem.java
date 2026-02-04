@@ -1,6 +1,6 @@
-package com.example.demo.dto;
+package com.example.demo.model;
 
-public class WardrobeItemDto {
+public class WardrobeItem {
     private String id;
     private String name;
     private String category;
