@@ -1,0 +1,5 @@
+# Copy to application-local.properties and set your keys. application-local.properties is in .gitignore.
+# Run with: --spring.profiles.active=local
+# Prefer env vars: export AWS_ACCESS_KEY_ID=... AWS_SECRET_ACCESS_KEY=...
+# aws.s3.access-key-id=your_access_key_id
+# aws.s3.secret-access-key=your_secret_access_key

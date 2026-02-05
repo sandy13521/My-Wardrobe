@@ -43,6 +43,12 @@ build/
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# Local config with secrets (never commit)
+application-local.properties
+*-local.properties
+.env
+.env.local
+
 # Package Files #
 *.jar
 *.war
